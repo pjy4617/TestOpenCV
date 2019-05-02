@@ -27,7 +27,9 @@ namespace Camera
         }
         private void DrawImage()
         {
-            using (IplImage src = new IplImage("ROIEdgeHor.bmp", LoadMode.AnyColor))
+            string solutionPath = System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
+            solutionPath += "\\Image\\ROIEdgeHor.bmp";
+            using (IplImage src = Cv.LoadImage(solutionPath, LoadMode.AnyColor))
             {
                 pictureBoxIpl1.ImageIpl = src;
                 pictureBoxIpl1.SizeMode = PictureBoxSizeMode.StretchImage;
