@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pictureBoxIpl1 = new OpenCvSharp.UserInterface.PictureBoxIpl();
             this.pictureBoxIpl2 = new OpenCvSharp.UserInterface.PictureBoxIpl();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -40,6 +41,12 @@
             this.pictureBoxIpl5 = new OpenCvSharp.UserInterface.PictureBoxIpl();
             this.pictureBoxIpl6 = new OpenCvSharp.UserInterface.PictureBoxIpl();
             this.pictureBoxIpl7 = new OpenCvSharp.UserInterface.PictureBoxIpl();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnPlay = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.btnDisconnect = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnMono = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIpl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIpl2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -57,7 +64,7 @@
             // 
             this.pictureBoxIpl1.Location = new System.Drawing.Point(3, 3);
             this.pictureBoxIpl1.Name = "pictureBoxIpl1";
-            this.pictureBoxIpl1.Size = new System.Drawing.Size(600, 450);
+            this.pictureBoxIpl1.Size = new System.Drawing.Size(1920, 1080);
             this.pictureBoxIpl1.TabIndex = 0;
             this.pictureBoxIpl1.TabStop = false;
             // 
@@ -68,6 +75,7 @@
             this.pictureBoxIpl2.Size = new System.Drawing.Size(600, 450);
             this.pictureBoxIpl2.TabIndex = 1;
             this.pictureBoxIpl2.TabStop = false;
+            this.pictureBoxIpl2.Visible = false;
             // 
             // comboBox1
             // 
@@ -115,6 +123,7 @@
             this.pictureBoxIpl3.Size = new System.Drawing.Size(600, 450);
             this.pictureBoxIpl3.TabIndex = 7;
             this.pictureBoxIpl3.TabStop = false;
+            this.pictureBoxIpl3.Visible = false;
             // 
             // trackBar4
             // 
@@ -133,6 +142,7 @@
             this.pictureBoxIpl4.Size = new System.Drawing.Size(600, 450);
             this.pictureBoxIpl4.TabIndex = 9;
             this.pictureBoxIpl4.TabStop = false;
+            this.pictureBoxIpl4.Visible = false;
             // 
             // pictureBoxIpl5
             // 
@@ -141,6 +151,7 @@
             this.pictureBoxIpl5.Size = new System.Drawing.Size(600, 450);
             this.pictureBoxIpl5.TabIndex = 10;
             this.pictureBoxIpl5.TabStop = false;
+            this.pictureBoxIpl5.Visible = false;
             // 
             // pictureBoxIpl6
             // 
@@ -149,6 +160,7 @@
             this.pictureBoxIpl6.Size = new System.Drawing.Size(600, 450);
             this.pictureBoxIpl6.TabIndex = 11;
             this.pictureBoxIpl6.TabStop = false;
+            this.pictureBoxIpl6.Visible = false;
             // 
             // pictureBoxIpl7
             // 
@@ -157,12 +169,72 @@
             this.pictureBoxIpl7.Size = new System.Drawing.Size(600, 450);
             this.pictureBoxIpl7.TabIndex = 12;
             this.pictureBoxIpl7.TabStop = false;
+            this.pictureBoxIpl7.Visible = false;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1856, 468);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "Connect";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click_1);
+            // 
+            // btnPlay
+            // 
+            this.btnPlay.Location = new System.Drawing.Point(1856, 497);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(75, 23);
+            this.btnPlay.TabIndex = 14;
+            this.btnPlay.Text = "Play";
+            this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.BtnPlay_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(1856, 526);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 15;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.BtnStop_Click);
+            // 
+            // btnDisconnect
+            // 
+            this.btnDisconnect.Location = new System.Drawing.Point(1856, 555);
+            this.btnDisconnect.Name = "btnDisconnect";
+            this.btnDisconnect.Size = new System.Drawing.Size(75, 23);
+            this.btnDisconnect.TabIndex = 16;
+            this.btnDisconnect.Text = "Disconnect";
+            this.btnDisconnect.UseVisualStyleBackColor = true;
+            this.btnDisconnect.Click += new System.EventHandler(this.BtnDisconnect_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
+            // 
+            // btnMono
+            // 
+            this.btnMono.Location = new System.Drawing.Point(1856, 594);
+            this.btnMono.Name = "btnMono";
+            this.btnMono.Size = new System.Drawing.Size(75, 23);
+            this.btnMono.TabIndex = 17;
+            this.btnMono.Text = "Mono";
+            this.btnMono.UseVisualStyleBackColor = true;
+            this.btnMono.Click += new System.EventHandler(this.BtnMono_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2477, 911);
+            this.ClientSize = new System.Drawing.Size(2477, 1104);
+            this.Controls.Add(this.btnMono);
+            this.Controls.Add(this.btnDisconnect);
+            this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.btnPlay);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBoxIpl7);
             this.Controls.Add(this.pictureBoxIpl6);
             this.Controls.Add(this.pictureBoxIpl5);
@@ -208,6 +280,12 @@
         private OpenCvSharp.UserInterface.PictureBoxIpl pictureBoxIpl5;
         private OpenCvSharp.UserInterface.PictureBoxIpl pictureBoxIpl6;
         private OpenCvSharp.UserInterface.PictureBoxIpl pictureBoxIpl7;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnPlay;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Button btnDisconnect;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btnMono;
     }
 }
 

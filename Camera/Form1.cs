@@ -4,16 +4,20 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
+using static MIUController;
 
 namespace Camera
 {
     public partial class Form1 : Form
     {
+        LPMC650 Lpmc = new LPMC650();
         public Form1()
         {
             InitializeComponent();
@@ -23,78 +27,80 @@ namespace Camera
         {
 
             comboBox1.DataSource = Enum.GetValues(typeof(ThresholdType));
-            
+
+            Button1_Click_1(null, EventArgs.Empty);
+
         }
         private void DrawImage()
         {
-            string solutionPath = System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
-            solutionPath += "\\Image\\ROIEdgeHor.bmp";
-            using (IplImage src = Cv.LoadImage(solutionPath, LoadMode.AnyColor))
-            {
-                pictureBoxIpl1.ImageIpl = src;
-                pictureBoxIpl1.SizeMode = PictureBoxSizeMode.StretchImage;
-
-//                 IplImage src = new IplImage(src1.Size, BitDepth.U8, 3);
-//                 double gamma_value = 2.0;
-//                 byte[] lut = new byte[256];
-//                 for(int i = 0; i < lut.Length; i++)
-//                 {
-//                     lut[i] = (byte)(Math.Pow(i / 255.0, 1.0 / gamma_value) * 255.0);
-//                 }
-//                 Cv.LUT(src1, src, lut);
-
-//                 pictureBoxIpl2.ImageIpl = src;
+//             string solutionPath = System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
+//             solutionPath += "\\Image\\ROIEdgeHor.bmp";
+//             using (IplImage src = Cv.LoadImage(solutionPath, LoadMode.AnyColor))
+//             {
+//                 pictureBoxIpl1.ImageIpl = src;
+//                 pictureBoxIpl1.SizeMode = PictureBoxSizeMode.StretchImage;
+// 
+// //                 IplImage src = new IplImage(src1.Size, BitDepth.U8, 3);
+// //                 double gamma_value = 2.0;
+// //                 byte[] lut = new byte[256];
+// //                 for(int i = 0; i < lut.Length; i++)
+// //                 {
+// //                     lut[i] = (byte)(Math.Pow(i / 255.0, 1.0 / gamma_value) * 255.0);
+// //                 }
+// //                 Cv.LUT(src1, src, lut);
+// 
+// //                 pictureBoxIpl2.ImageIpl = src;
+// //                 pictureBoxIpl2.SizeMode = PictureBoxSizeMode.StretchImage;
+// 
+//                 IplImage bin = new IplImage(src.Size, BitDepth.U8, 1);
+//                 Cv.CvtColor(src, bin, ColorConversion.RgbToGray);
+//                 Cv.Smooth(bin, bin, SmoothType.Gaussian);
+//                 ThresholdType thresholdType = (ThresholdType)comboBox1.SelectedValue;
+//                 Cv.Threshold(bin, bin, trackBar1.Value, 255, thresholdType);
+//                 
+//                 pictureBoxIpl2.ImageIpl = bin;
 //                 pictureBoxIpl2.SizeMode = PictureBoxSizeMode.StretchImage;
-
-                IplImage bin = new IplImage(src.Size, BitDepth.U8, 1);
-                Cv.CvtColor(src, bin, ColorConversion.RgbToGray);
-                Cv.Smooth(bin, bin, SmoothType.Gaussian);
-                ThresholdType thresholdType = (ThresholdType)comboBox1.SelectedValue;
-                Cv.Threshold(bin, bin, trackBar1.Value, 255, thresholdType);
-                
-                pictureBoxIpl2.ImageIpl = bin;
-                pictureBoxIpl2.SizeMode = PictureBoxSizeMode.StretchImage;
-
-                IplImage dil = new IplImage(src.Size, BitDepth.U8, 1);
-                IplConvKernel element = new IplConvKernel(4, 4, 2, 2, ElementShape.Custom, new int[3, 3]);
-                Cv.Erode(bin, dil, element, 1);
-
-                pictureBoxIpl3.ImageIpl = dil;
-                pictureBoxIpl3.SizeMode = PictureBoxSizeMode.StretchImage;
-
-
-
-
-
-
-
-                IplImage con = new IplImage(src.Size, BitDepth.U8, 3);
-                Cv.Copy(src, con);
-
-                CvMemStorage storage = new CvMemStorage();
-                CvSeq<CvPoint> contours;
-                Cv.FindContours(dil, storage, out contours, CvContour.SizeOf, ContourRetrieval.List, ContourChain.ApproxSimple);
-                try
-                {
-                    Cv.DrawContours(con, contours, CvColor.Red, CvColor.Red, 1, 1, LineType.AntiAlias);
-                    Cv.ClearSeq(contours);
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-                
-                
-                
-                Cv.ReleaseMemStorage(storage);
-
-                pictureBoxIpl4.ImageIpl = con;
-                pictureBoxIpl4.SizeMode = PictureBoxSizeMode.StretchImage;
-
-                if (dil != null) Cv.ReleaseImage(bin);
-                if (bin != null) Cv.ReleaseImage(bin);
-                if (con != null) Cv.ReleaseImage(con);
-            }
+// 
+//                 IplImage dil = new IplImage(src.Size, BitDepth.U8, 1);
+//                 IplConvKernel element = new IplConvKernel(4, 4, 2, 2, ElementShape.Custom, new int[3, 3]);
+//                 Cv.Erode(bin, dil, element, 1);
+// 
+//                 pictureBoxIpl3.ImageIpl = dil;
+//                 pictureBoxIpl3.SizeMode = PictureBoxSizeMode.StretchImage;
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+//                 IplImage con = new IplImage(src.Size, BitDepth.U8, 3);
+//                 Cv.Copy(src, con);
+// 
+//                 CvMemStorage storage = new CvMemStorage();
+//                 CvSeq<CvPoint> contours;
+//                 Cv.FindContours(dil, storage, out contours, CvContour.SizeOf, ContourRetrieval.List, ContourChain.ApproxSimple);
+//                 try
+//                 {
+//                     Cv.DrawContours(con, contours, CvColor.Red, CvColor.Red, 1, 1, LineType.AntiAlias);
+//                     Cv.ClearSeq(contours);
+//                 }
+//                 catch(Exception ex)
+//                 {
+//                     MessageBox.Show(ex.ToString());
+//                 }
+//                 
+//                 
+//                 
+//                 Cv.ReleaseMemStorage(storage);
+// 
+//                 pictureBoxIpl4.ImageIpl = con;
+//                 pictureBoxIpl4.SizeMode = PictureBoxSizeMode.StretchImage;
+// 
+//                 if (dil != null) Cv.ReleaseImage(bin);
+//                 if (bin != null) Cv.ReleaseImage(bin);
+//                 if (con != null) Cv.ReleaseImage(con);
+//             }
         }
         private void HoughLine()
         {
@@ -212,6 +218,68 @@ namespace Camera
         private void trackBar4_Scroll(object sender, EventArgs e)
         {
             DrawImage();
+        }
+
+        private void Button1_Click_1(object sender, EventArgs e)
+        {
+            string file = "c:\\bin\\data\\2M_IMX307_2M.ini";
+            if(Lpmc.Connect())
+            {
+                Lpmc.Initialize(file);
+                MessageBox.Show("Connected!!");
+            }
+            else
+            {
+                MessageBox.Show("can not Connected!!");
+            }
+            
+            
+        }
+
+        private void BtnDisconnect_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+            Lpmc.Disconnect();
+            MessageBox.Show("Disconnected");
+        }
+
+        private void BtnPlay_Click(object sender, EventArgs e)
+        {
+            Lpmc.Play();
+            timer1.Interval = 10;
+            timer1.Enabled = true;
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+
+            if (!Lpmc.Connected) return;
+            try
+            {
+
+                pictureBoxIpl1.ImageIpl = Lpmc.GetImage();
+            }
+            catch
+            {
+
+            }
+            
+        }
+
+        private void BtnStop_Click(object sender, EventArgs e)
+        {
+            Lpmc.Stop();
+            timer1.Enabled = false;
+        }
+        
+
+        
+
+        private void BtnMono_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+            Lpmc.ChangeMono();
+            timer1.Enabled = true;
         }
     }
 }
